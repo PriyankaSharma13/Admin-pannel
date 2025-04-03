@@ -1,5 +1,5 @@
 import React from "react";
-import LineChart from "./Chart/ LineChart";
+import LineChart from "./Chart/LineChart";
 import AreaChart from "./Chart/AreaChart";
 import ColumnChart from "./Chart/ColumnChart";
 import BarChart from "./Chart/BarChart";

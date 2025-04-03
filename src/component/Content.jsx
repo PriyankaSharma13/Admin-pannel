@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import Footer from "./Footer";
 import CardSection from "./CardSection";
 import { BsThreeDots } from "react-icons/bs";
-import LineChart from "./Chart/ LineChart";
 import { newsItems, recentSales, topSellingProducts } from "../data/data";
 import BudgetReport from "./Budget-Report";
 import DonutChartWebsite from "./Chart/DonutChart";
 import RecentActivity from "./CardDashboard/RecentActivity";
+import LineChart from "./Chart/LineChart";
 
 const Dashboard = () => {
   const [filter, setFilter] = useState("Today");
