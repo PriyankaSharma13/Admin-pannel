@@ -1,0 +1,304 @@
+import React, { useState } from "react";
+import Footer from "./Footer";
+import CardSection from "./CardSection";
+import { BsThreeDots } from "react-icons/bs";
+import LineChart from "./Chart/ LineChart";
+import { newsItems, recentSales, topSellingProducts } from "../data/data";
+import BudgetReport from "./Budget-Report";
+import DonutChartWebsite from "./Chart/DonutChart";
+import RecentActivity from "./CardDashboard/RecentActivity";
+
+const Dashboard = () => {
+  const [filter, setFilter] = useState("Today");
+
+
+  return (
+    <>
+      <div className="ml-[300px] p-4 mt-[45px]">
+      <div className="pagetitle mb-4">
+          <h1 className="text-xl font-bold mb-2">Dashboard</h1>
+          <nav aria-label="breadcrumb">
+            <ol className="breadcrumb flex space-x-2 text-sm text-gray-500">
+              <li>
+                <a href="/" className="text-blue-600 hover:underline">
+                  Home
+                </a>
+              </li>
+              <li>
+                <span className="text-gray-400">/</span>
+              </li>
+              <li className="font-medium text-gray-700">Dashboard</li>
+            </ol>
+          </nav>
+        </div>
+
+        <div className="container mx-auto px-4 py-6">
+          {/*------  Main Layout  --------*/}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* ---------- Left Side: Cards ---------- */}
+            <section className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* ------ Sales Card -------- */}
+              <CardSection
+                title="Sales"
+                subtitle="Today"
+                icon={{ name: "bi-cart", bgColor: "blue", color: "blue" }}
+                value="145"
+                trend={{
+                  text: "12% increase",
+                  color: "text-green-600",
+                  detail: "increase",
+                }}
+                className="h-64 p-4" 
+              />
+
+              {/* ------ Revenue Card  --------- */}
+              <CardSection
+                title="Revenue"
+                subtitle="This Month"
+                icon={{
+                  name: "bi-currency-dollar",
+                  bgColor: "green",
+                  color: "green",
+                }}
+                value="$3,264"
+                trend={{
+                  text: "8% increase",
+                  color: "text-green-600",
+                  detail: "increase",
+                }}
+                className="h-64 p-4" 
+              />
+
+              {/* ––––– Customers Card ––––– */}
+              <div className="md:col-span-2">
+                <CardSection
+                  title="Customers"
+                  subtitle="This Year"
+                  icon={{ name: "bi-people", bgColor: "red", color: "red" }}
+                  value="1,244"
+                  trend={{
+                    text: "12% decrease",
+                    color: "text-red-600",
+                    detail: "decrease",
+                  }}
+                  className="p-4" 
+                />
+
+              {/* -------- Reports Section -------- */}
+                <div className="col-span-1 md:col-span-2 mt-7">
+                  <div className="bg-white shadow-lg rounded-lg p-6">
+                    <div className="flex justify-between items-center">
+                      <h5 className="text-xl font-semibold text-gray-800">
+                        Reports{" "}
+                        <span className="text-sm text-gray-500">| Today</span>
+                      </h5>
+                      <button className="text-gray-500 hover:text-gray-800">
+                        <BsThreeDots />
+                      </button>
+                    </div>
+                    <div id="reportsChart" className="mt-4">
+                      <LineChart />
+                    </div>
+                  </div>
+                </div>
+
+                {/* ------- Recent Sales ---------------*/}
+                <div className="col-span-1 md:col-span-2 mt-7">
+                  <div className="bg-white shadow-lg rounded-lg p-4">
+                    <div className="flex justify-between items-center">
+                      <h5 className="text-xl font-semibold text-gray-800">
+                        Recent Sales{" "}
+                        <span className="text-sm text-gray-500">| Today</span>
+                      </h5>
+                      <button className="text-gray-500 hover:text-gray-800">
+                        <BsThreeDots />
+                      </button>
+                    </div>
+                    <div className="overflow-x-auto mt-4">
+                      <table className="min-w-full table-auto border-collapse border border-gray-300">
+                        <thead>
+                          <tr className="bg-gray-100">
+                            <th className="border border-gray-300 px-4 py-2 text-left">
+                              #
+                            </th>
+                            <th className="border border-gray-300 px-4 py-2 text-left">
+                              Customer
+                            </th>
+                            <th className="border border-gray-300 px-4 py-2 text-left">
+                              Product
+                            </th>
+                            <th className="border border-gray-300 px-4 py-2 text-left">
+                              Amount
+                            </th>
+                            <th className="border border-gray-300 px-4 py-2 text-left">
+                              Status
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {recentSales.map((sale) => (
+                            <tr key={sale.id} className="hover:bg-gray-50">
+                              <td className="border border-gray-300 px-4 py-2">
+                                {sale.id}
+                              </td>
+                              <td className="border border-gray-300 px-4 py-2">
+                                {sale.customer}
+                              </td>
+                              <td className="border border-gray-300 px-4 py-2">
+                                {sale.product}
+                              </td>
+                              <td className="border border-gray-300 px-4 py-2">
+                                {sale.amount}
+                              </td>
+                              <td className="border border-gray-300 px-4 py-2">
+                                <span
+                                  className={`px-2 py-1 rounded text-white`}
+                                  style={{ backgroundColor: sale.statusColor }}
+                                >
+                                  {sale.status}
+                                </span>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                {/* ------- Selling Products Section---------------*/}
+                <div className="col-span-1 md:col-span-2 mt-7">
+                  <div className="bg-white shadow-lg rounded-lg p-6">
+                    <div className="flex justify-between items-center">
+                      <h5 className="text-xl font-semibold text-gray-800">
+                        Top Selling Products{" "}
+                        <span className="text-sm text-gray-500">| Today</span>
+                      </h5>
+                      <button className="text-gray-500 hover:text-gray-800">
+                        <BsThreeDots />
+                      </button>
+                    </div>
+                    <div className="overflow-x-auto mt-4">
+                      <table className="min-w-full table-auto border-collapse border border-gray-300">
+                        <thead className="bg-gray-100">
+                          <tr>
+                            <th className="px-4 py-2 text-left border border-gray-300">
+                              Preview
+                            </th>
+                            <th className="px-4 py-2 text-left border border-gray-300">
+                              Product
+                            </th>
+                            <th className="px-4 py-2 text-left border border-gray-300">
+                              Price
+                            </th>
+                            <th className="px-4 py-2 text-left border border-gray-300">
+                              Sold
+                            </th>
+                            <th className="px-4 py-2 text-left border border-gray-300">
+                              Revenue
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {topSellingProducts.map((product) => (
+                            <tr key={product.id} className="hover:bg-gray-50">
+                              <td className="px-4 py-2 text-center border border-gray-300">
+                                <img
+                                  src={product.preview}
+                                  alt="Product"
+                                  className="w-10 h-10 rounded"
+                                />
+                              </td>
+                              <td className="px-4 py-2 border border-gray-300">
+                                {product.name}
+                              </td>
+                              <td className="px-4 py-2 border border-gray-300">
+                                {product.price}
+                              </td>
+                              <td className="px-4 py-2 border border-gray-300">
+                                {product.sold}
+                              </td>
+                              <td className="px-4 py-2 border border-gray-300">
+                                {product.revenue}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Right Side: Recent Activity */}
+            <section className="space-y-6">
+              {/* Recent Activity */}
+              <div className="bg-white shadow-md rounded-lg">
+                <RecentActivity/>
+              </div>
+
+              <div className="bg-white shadow-md rounded-lg">
+                <BudgetReport />
+              </div>
+              <div className="bg-white shadow-md rounded-lg">
+                <DonutChartWebsite />
+              </div>
+
+              {/* ---------   News Updated ------ */}
+              <div className="bg-white shadow-md rounded-lg">
+                {/* Card Body */}
+                <div className="flex justify-between p-4">
+                  <h5 className="text-lg font-semibold">
+                    Recent Activity{" "}
+                    <span className="text-gray-500">| {filter}</span>
+                  </h5>
+                  <button
+                    className="text-gray-500"
+                    onClick={() =>
+                      setFilter(filter === "Today" ? "This Month" : "Today")
+                    }
+                  >
+                    <BsThreeDots />
+                  </button>
+                </div>
+
+                {/* -------- News Items --------- */}
+                <div className="news p-3">
+                  {newsItems.map((item, index) => (
+                    <div
+                      key={index}
+                      className="post-item mb-4 flex items-center"
+                    >
+                      <img
+                        src={item.imgSrc}
+                        alt={`News ${index + 1}`}
+                        className="w-16 h-16 object-cover rounded-md mr-4"
+                      />
+                      <div>
+                        <h4 className="text-lg font-semibold">
+                          <a
+                            href="#"
+                            className="text-gray-800 hover:text-blue-500"
+                          >
+                            {item.title}
+                          </a>
+                        </h4>
+                        <p className="text-gray-600 text-sm">
+                          {item.description}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </>
+  );
+};
+
+export default Dashboard;
